@@ -1,6 +1,16 @@
 Nume: DeltaBot
 
-Descriere: -
+Descriere: 
+
+Deltabot este o platforma multi-tool care serveste in diferite aplicatii de tip CNC.
+Exemple:
+- 2D CAD
+- PCB Milling
+- Gravare (lemn, metal)
+- Pick & Place
+- Imprimanta 3D
+- Inscriptionare cu Laser
+
 
 Categorie: Hardware
 
