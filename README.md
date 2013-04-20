@@ -1,6 +1,9 @@
 Nume: DeltaBot
+
 Descriere: -
+
 Categorie: Hardware
+
 Echipa:
  - Calin Ilie Alexandru
  - Moldovanu Ionut
