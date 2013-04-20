@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DeltaCommander</title>
+</head>
+
+<body>
+
+<form id="canvas" action="" method="get">
+  <input type="text" name="x" id="x" value="" />
+	<input type="text" name="y" id="y" value="" />
+	<input type="text" name="z" id="z" value="" />
+	<input type="submit" value="Send" />
+</form>
+
+<script>
+
+Ajax = function(opts) {
+	if ( !opts ) {
+		opts = {};
+	};
+	var http = false;
+	if( typeof ActiveXObject != 'undefined' ) {
+		try {
+			http = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (e) {
+			try {
+				http = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (E) {
+				http = false;
+			};
+		};
+	} else if ( window.XMLHttpRequest ) {
+		try {
+			http = new XMLHttpRequest();
+		} catch (e) {
+			http = false;
+		};
+	};
+	if ( !http ) {
+		return;
+	};
+	var opt = {
+		'type'			:	'GET',
+		'url'				:	'',
+		'data'			:	'',
+		'success'		:	false
+	};
+	for ( var key in opt ) {
+		if ( opts.hasOwnProperty(key) ) {
+			opt[key] = opts[key];
+		};
+	};
+	var url = opt.url;
+	var parameters = opt.data;
+	var callback = opt.success;
+	var type = opt.type.toUpperCase();
+	
+	http.open(type, url, true);
+	http.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+	if ( type == "POST" ) {
+		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	};
+	
+	http.onreadystatechange = function () {
+		if ( http.readyState == 4 ) {
+			if ( http.status == 200 ) {
+				if ( callback ) {
+					var response;
+					response = http.responseText;
+					callback(response);
+				};
+			};
+		};
+	};
+	
+	http.send(parameters);
+	
+};
+
+window.addEventListener("load", function() {
+    document.getElementById("canvas").addEventListener("submit", function(e) {
+		e.preventDefault();
+		var x,y,z;
+		x = document.getElementById("x").value;
+		y = document.getElementById("y").value;
+		z = document.getElementById("z").value;
+		Ajax({
+			type	:	"GET",
+			url		:	"/?x=" + x + "&y=" + y + "&z=" + z,
+			success	:	function() {
+							document.getElementById("x").focus();
+						}
+		});
+    }, false);
+}, false);
+</script>
+
+</body>
+
+</html>
