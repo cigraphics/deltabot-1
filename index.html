@@ -2,16 +2,19 @@
 <html>
 <head>
 <title>DeltaCommander</title>
+<style>
+body {margin:0px;, padding:0px;}
+</style>
 </head>
 
 <body>
 
-<div id="canvas" style="width:500px; height:200px; border:1px solid #CCC;"></div>
+<div id="canvas" style="width:600px; height:600px; border:1px solid #000;"></div>
 
 <script>
 
 Ajax = function(opts) {
-  if ( !opts ) {
+	if ( !opts ) {
 		opts = {};
 	};
 	var http = false;
@@ -74,18 +77,118 @@ Ajax = function(opts) {
 };
 
 var sending = false;
-
+var s1 = s2 = s3 = 10;
+var lastX = 0;
+var lastY = 0;
+var incr = 0;
+var marja = 3;
+var no_move = true;
 window.addEventListener("load", function() {
-    document.getElementById("canvas").addEventListener("mousemove", function(e) {
+	/*
+	sending = true;
+	Ajax({
+		type	:	"GET",
+		url		:	"/?x=18&y=18&z=18",
+		success :	function(data) {
+						sending = false;
+					}
+	});
+	*/
+	
+	
+	var id = document.getElementById("canvas");
+	
+    id.addEventListener("mousemove", function(e) {
+		var x = e.pageX;
+		var y = e.pageY;
 		if ( !sending ) {
-			sending = true;
+			// PENTRU X
+		
+			if ( e.pageX <= 300) {
+				incr++;
+				if ( lastX > x && incr >= marja) {
+				  s1 = s2 = 0;
+				  no_move = true;
+				  if (s3 <= 45) {
+					s3++;
+					s1 = Math.round(s3/4);
+					incr = 0;
+				  }
+				  
+				  /*if (lastY > y && incr >= marja) {
+					if (s2 <= 45) {
+						s3 = 0;
+						s1 = 0;
+						s2++;
+					}
+				  }*/
+				  
+				} else {
+				  if (lastX < x && s3 >= 0 && incr >= marja) {
+				  no_move = true;
+				    if (s3 >= 0) {
+						s3--;
+						s1 = Math.round(s3/4);
+						incr = 0;
+					}
+				  }
+				  /*if (s2 >= 0) {
+						s3 = 0;
+						s1 = 0;
+						s2--;
+					}*/
+				}
+			} else {
+				incr++;
+				if ( lastX < x && s2 <= 45 && incr >= marja) {
+				no_move = true;
+				s1 = s3 = 0;
+				  if (s2 <= 45) {
+					s2++;
+					s1 = Math.round(s2/4);
+					incr = 0;
+				  }
+				} else {
+				  if (lastX > x && s2 >= 0 && incr >= marja) {
+				  no_move = true;
+					if (s2 >= 0) {
+						s2--;
+						s1 = Math.round(s2/4);
+						incr = 0;
+					}
+				  }
+				}
+			}
+			
+			lastX = x;
+			lastY = y;			
+	id.onclick = function() {
+		incr = 0;
+		no_move = false;
+		s1+=1;
+		s2+=1;
+		s3+=1;
+		
+		console.log("clicked");
+	};
+	id.oncontextmenu = function(e) {
+		incr = 0;
+		no_move = false;
+		s1-=1;
+		s2-=1;
+		s3-=1;
+		
+		return false
+	}
+	console.log("/?x=" + s1 + "&y=" + s2 + "&z=" + s3);		
 			Ajax({
 				type	:	"GET",
-				url		:	"/?x=" + e.pageX + "&y=" + e.pageY + "&z=mouse",
+				url		:	"/?x=" + s1 + "&y=" + s2 + "&z=" + s3,
 				success :	function(data) {
 								sending = false;
 							}
 			});
+			
 		}
     }, false);
 }, false);
