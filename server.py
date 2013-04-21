@@ -29,32 +29,10 @@ class DeltaBotHTTPRequestHandler(BaseHTTPRequestHandler):
 				os.system("/home/project/reset.o")
 			else :
 				data = dict(urlparse.parse_qsl(url))
-				if data["z"] == "mouse" :
-					print("mouse")
-				else :
-					x = int(data["x"])
-					y = int(data["y"])
-					z = int(data["z"])
-					list = {x,y,z}
-					ma = max(list)
-					nx = 0
-					ny = 0
-					nz = 0
-					maZ = ma + 1
-					for i in range(0, maZ) :
-						if x == ma :
-							maxx = x
-						if y == ma :
-							maxx = y
-						if z == ma :
-							maxx = z
-						if maxx - x - i <= 0 and nx < x :
-							nx = nx + 1
-						if maxx - y - i <= 0 and ny < y :
-							ny = ny + 1
-						if maxx - z - i <= 0 and nz < z :
-							nz = nz + 1
-						os.system("/home/project/delta.o " + str(nx) + " " + str(ny) + " " + str(nz))
+				x = data["x"]
+				y = data["y"]
+				z = data["z"]
+				os.system("/home/project/test.o " + x + " " + y + " " + z)
 		return
 
 def run():
