@@ -22,12 +22,16 @@
 int servo_max_deg[4];
 int servo_min_deg[4];
 
+int a1[19];
+int a2[19];
+int a3[19];
+
 int servo_deg[8];
 
 using namespace std;
 
 void servo_write(int servo_pin, int deg) { // 0 - 180 deg
-  int new_deg = deg == 0 ? 0 : servo_min_deg[servo_pin] - deg;
+	int new_deg = deg == 0 ? 0 : servo_min_deg[servo_pin] - deg;
 	printf("Attempt: Servo %d > deg: %d \n", servo_pin, new_deg);
 	if (new_deg >= servo_max_deg[servo_pin] && new_deg <= servo_min_deg[servo_pin]) {
 		char exec[255] = {0};
@@ -39,6 +43,67 @@ void servo_write(int servo_pin, int deg) { // 0 - 180 deg
 }
 
 int main(int argc, char *argv[]) {
+
+	// test
+	a1[0] = 21;
+	a1[1] = 22;
+	a1[2] = 23;
+	a1[3] = 23;
+	a1[4] = 25;
+	a1[5] = 26;
+	a1[6] = 27;
+	a1[7] = 28;
+	a1[8] = 29;
+	a1[9] = 30;
+	a1[10] = 31;
+	a1[11] = 32;
+	a1[12] = 33;
+	a1[13] = 34;
+	a1[14] = 35;
+	a1[15] = 36;
+	a1[16] = 37;
+	a1[17] = 38;
+	
+	a2[0] = 0;
+	a2[1] = 0;
+	a2[2] = 0;
+	a2[3] = 0;
+	a2[4] = 0;
+	a2[5] = 0;
+	a2[6] = 0;
+	a2[7] = 0;
+	a2[8] = 1;
+	a2[9] = 1;
+	a2[10] = 1;
+	a2[11] = 1;
+	a2[12] = 1;
+	a2[13] = 1;
+	a2[14] = 1;
+	a2[15] = 1;
+	a2[16] = 2;
+	a2[17] = 2;
+
+		
+	a3[0] = 0;
+	a3[1] = 0;
+	a3[2] = 0;
+	a3[3] = 0;
+	a3[4] = 1;
+	a3[5] = 1;
+	a3[6] = 1;
+	a3[7] = 1;
+	a3[8] = 2;
+	a3[9] = 2;
+	a3[10] = 2;
+	a3[11] = 2;
+	a3[12] = 3;
+	a3[13] = 3;
+	a3[14] = 3;
+	a3[15] = 3;
+	a3[16] = 4;
+	a3[17] = 4;
+	
+	// test 
 
 	servo_deg[1] = 0;
 	servo_deg[2] = 0;
@@ -52,60 +117,24 @@ int main(int argc, char *argv[]) {
 	servo_min_deg[2] = SERVO_2_MIN_DEG;
 	servo_min_deg[7] = SERVO_3_MIN_DEG;
 	
-	/*
-	ofstream myfile;
-	myfile.open ("servo_1_deg.txt");
 	
-	printf("New session: \n");
-	myfile << "New session: \n";
+	//servo_write(SERVO_1_PIN, 28);
+	//servo_write(SERVO_2_PIN, 15);
+	//servo_write(SERVO_3_PIN, 21);
+	delay(500);
 	
-	for (int i = 0; i <= 45; i++){
-		servo_write(SERVO_1_PIN, i);
-		myfile << "Servo_1 is at position: " << servo_deg[SERVO_1_PIN] << ".\n";
+	printf("%d", a1[3]);
+	return 0;
+	for (int i = 0; i <= 17; i++) {
+		delay(500);
+		printf("pas: %d > S1= %d > S2= %d > S3=%d \n", i, a1[i], a2[i], a3[i]);
+		//servo_write(SERVO_1_PIN, atoi(a1[i]));
+		//servo_write(SERVO_2_PIN, atoi(a2[i]));
+		//servo_write(SERVO_3_PIN, atoi(a3[i]));
 	}
-	
-	myfile.close();*/
-	
-	
-	/*servo_write(SERVO_1_PIN, 22);
-	servo_write(SERVO_3_PIN, 22);
-	servo_write(SERVO_2_PIN, 22);
-	*/
-	
 	/*
-	while(1) {
-		for (int i = 10; i <= 24; i++) {
-			servo_write(SERVO_1_PIN, 24);
-			servo_write(SERVO_1_PIN, 0);
-			
-			servo_write(SERVO_2_PIN, i);
-			servo_write(SERVO_3_PIN, i);
-		}
-		
-		delay(500);
-		
-		for (int i = 24; i >= 0; i--) {
-			servo_write(SERVO_1_PIN, i);
-			servo_write(SERVO_2_PIN, i);
-			servo_write(SERVO_3_PIN, i);
-		}
-		
-		delay(500);
-	}*/
-	
-	
-	// centru	
-	/*
-	servo_write(SERVO_1_PIN, 23);
-	servo_write(SERVO_2_PIN, 23);
-	servo_write(SERVO_3_PIN, 23);*/
-	
-	
-	//delay(5000);
-	
-	// colt dreapta
 	servo_write(SERVO_1_PIN, atoi(argv[1]));
 	servo_write(SERVO_2_PIN, atoi(argv[2]));
 	servo_write(SERVO_3_PIN, atoi(argv[3]));
-	
+	*/
 }
