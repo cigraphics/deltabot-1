@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DeltaCommander</title>
+<style>
+body {margin:0px;, padding:0px;}
+.box {width:98px; height:98px; border:1px solid #555; float:left;}
+.sel {background:#EEE;}
+</style>
+</head>
+
+<body>
+
+<div id="canvas" style="width:300px; height:300px; border:1px solid #000;">
+  <div class="box" id="1"></div>
+	<div class="box" id="2"></div>
+	<div class="box" id="3"></div>
+	<div class="box" id="4"></div>
+	<div class="box" id="5"></div>
+	<div class="box" id="6"></div>
+	<div class="box" id="7"></div>
+	<div class="box" id="8"></div>
+	<div class="box" id="9"></div>
+</div>
+
+<script>
+
+Ajax = function(opts) {
+	if ( !opts ) {
+		opts = {};
+	};
+	var http = false;
+	if( typeof ActiveXObject != 'undefined' ) {
+		try {
+			http = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (e) {
+			try {
+				http = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (E) {
+				http = false;
+			};
+		};
+	} else if ( window.XMLHttpRequest ) {
+		try {
+			http = new XMLHttpRequest();
+		} catch (e) {
+			http = false;
+		};
+	};
+	if ( !http ) {
+		return;
+	};
+	var opt = {
+		'type'			:	'GET',
+		'url'				:	'',
+		'data'			:	'',
+		'success'		:	false
+	};
+	for ( var key in opt ) {
+		if ( opts.hasOwnProperty(key) ) {
+			opt[key] = opts[key];
+		};
+	};
+	var url = opt.url;
+	var parameters = opt.data;
+	var callback = opt.success;
+	var type = opt.type.toUpperCase();
+	
+	http.open(type, url, true);
+	http.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+	if ( type == "POST" ) {
+		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	};
+	
+	http.onreadystatechange = function () {
+		if ( http.readyState == 4 ) {
+			if ( http.status == 200 ) {
+				if ( callback ) {
+					var response;
+					response = http.responseText;
+					callback(response);
+				};
+			};
+		};
+	};
+	
+	http.send(parameters);
+	
+};
+
+window.addEventListener("load", function() {
+
+	document.onkeyup = function(e) {
+		console.log(e.keyCode);
+	}
+
+		document.getElementById("canvas").addEventListener("click", function(e) {
+				alert(e.target.id);
+				e.target.className = "box sel";
+		}, false);
+}, false);
+</script>
+
+</body>
+
+</html>
