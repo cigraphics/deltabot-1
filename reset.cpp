@@ -19,7 +19,7 @@
 #define SERVO_3_MAX_DEG (SERVO_3_MIN_DEG - MASA_LUCRU)
 
 void servo_write(int servo_pin, int deg) { // 0 - 180 deg
-  char exec[255] = {0};
+	char exec[255] = {0};
 	sprintf(exec, "echo %d=%d > /dev/servoblaster", servo_pin, deg);
 	system(exec);
 	
