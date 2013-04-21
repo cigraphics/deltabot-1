@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DeltaCommander</title>
+<style>
+body {margin:0px;, padding:0px;}
+</style>
+</head>
+
+<body>
+
+<div id="canvas" style="width:600px; height:600px; border:1px solid #000;"></div>
+
+<script>
+
+Ajax = function(opts) {
+  if ( !opts ) {
+		opts = {};
+	};
+	var http = false;
+	if( typeof ActiveXObject != 'undefined' ) {
+		try {
+			http = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (e) {
+			try {
+				http = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (E) {
+				http = false;
+			};
+		};
+	} else if ( window.XMLHttpRequest ) {
+		try {
+			http = new XMLHttpRequest();
+		} catch (e) {
+			http = false;
+		};
+	};
+	if ( !http ) {
+		return;
+	};
+	var opt = {
+		'type'			:	'GET',
+		'url'				:	'',
+		'data'			:	'',
+		'success'		:	false
+	};
+	for ( var key in opt ) {
+		if ( opts.hasOwnProperty(key) ) {
+			opt[key] = opts[key];
+		};
+	};
+	var url = opt.url;
+	var parameters = opt.data;
+	var callback = opt.success;
+	var type = opt.type.toUpperCase();
+	
+	http.open(type, url, true);
+	http.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+	if ( type == "POST" ) {
+		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	};
+	
+	http.onreadystatechange = function () {
+		if ( http.readyState == 4 ) {
+			if ( http.status == 200 ) {
+				if ( callback ) {
+					var response;
+					response = http.responseText;
+					callback(response);
+				};
+			};
+		};
+	};
+	
+	http.send(parameters);
+	
+};
+
+function move(s1, s2, s3) {
+	Ajax({
+		type	:	"GET",
+		url		:	"/?x=" + s1 + "&y=" + s2 + "&z=" + s3,
+		success :	function(data) {
+						sending = false;
+					}
+	});
+		
+}
+var sending = false;
+var s1 = s2 = s3 = 1;
+
+move(s1, s2, s3);
+
+var q = 81;
+var w = 87;
+var EF = 69;
+
+var i = 73;
+var o = 79;
+var p = 80;
+
+var k = 75
+var l = 76;
+var j = 74;
+
+window.addEventListener("load", function() {
+	document.onkeyup = function(e) {
+		console.log(e.keyCode);
+		if (e.keyCode == q) { // q
+			s1+=1;
+			
+			move(s1, s2, s3);
+			console.log("/?x=" + s1 + "&y=" + s2 + "&z=" + s3);		
+		}
+		if (e.keyCode == w) { // w
+			s2+=1;
+			
+			move(s1, s2, s3);
+			console.log("/?x=" + s1 + "&y=" + s2 + "&z=" + s3);		
+		}
+		
+		if (e.keyCode == EF) { // e
+			s3+=1;
+			move(s1, s2, s3);
+			console.log("/?x=" + s1 + "&y=" + s2 + "&z=" + s3);		
+		}
+		
+		if (e.keyCode == i) { // q
+			s1-=1;
+			
+			move(s1, s2, s3);
+			console.log("/?x=" + s1 + "&y=" + s2 + "&z=" + s3);		
+		}
+		if (e.keyCode == o) { // w
+			s2-=1;
+			
+			move(s1, s2, s3);
+			console.log("/?x=" + s1 + "&y=" + s2 + "&z=" + s3);		
+		}
+		
+		if (e.keyCode == p) { // e
+			s3-=1;
+			move(s1, s2, s3);
+			console.log("/?x=" + s1 + "&y=" + s2 + "&z=" + s3);		
+		}
+		
+		if (e.keyCode == l) {
+			s1 = 1;
+			s2 = 1;
+			s3 = 1;
+		
+			move(s1, s2, s3);
+		}
+		
+		if (e.keyCode == k) {
+			s1 = 9;
+			s2 = 9;
+			s3 = 9;
+			
+			move(s1, s2, s3);
+			
+		}
+		
+		if (e.keyCode == j) {
+			s1 = 13;
+			s2 = 13;
+			s3 = 13;
+			
+			move(s1, s2, s3);
+		}
+	}
+});
+</script>
+
+</body>
+
+</html>
