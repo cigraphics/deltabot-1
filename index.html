@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>DeltaCommander</title>
+</head>
+
+<body>
+
+<div id="canvas" style="width:500px; height:200px; border:1px solid #CCC;"></div>
+
+<script>
+
+Ajax = function(opts) {
+  if ( !opts ) {
+		opts = {};
+	};
+	var http = false;
+	if( typeof ActiveXObject != 'undefined' ) {
+		try {
+			http = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (e) {
+			try {
+				http = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (E) {
+				http = false;
+			};
+		};
+	} else if ( window.XMLHttpRequest ) {
+		try {
+			http = new XMLHttpRequest();
+		} catch (e) {
+			http = false;
+		};
+	};
+	if ( !http ) {
+		return;
+	};
+	var opt = {
+		'type'			:	'GET',
+		'url'				:	'',
+		'data'			:	'',
+		'success'		:	false
+	};
+	for ( var key in opt ) {
+		if ( opts.hasOwnProperty(key) ) {
+			opt[key] = opts[key];
+		};
+	};
+	var url = opt.url;
+	var parameters = opt.data;
+	var callback = opt.success;
+	var type = opt.type.toUpperCase();
+	
+	http.open(type, url, true);
+	http.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+	if ( type == "POST" ) {
+		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	};
+	
+	http.onreadystatechange = function () {
+		if ( http.readyState == 4 ) {
+			if ( http.status == 200 ) {
+				if ( callback ) {
+					var response;
+					response = http.responseText;
+					callback(response);
+				};
+			};
+		};
+	};
+	
+	http.send(parameters);
+	
+};
+
+var sending = false;
+
+window.addEventListener("load", function() {
+    document.getElementById("canvas").addEventListener("mousemove", function(e) {
+		if ( !sending ) {
+			sending = true;
+			Ajax({
+				type	:	"GET",
+				url		:	"/?x=" + e.pageX + "&y=" + e.pageY + "&z=mouse",
+				success :	function(data) {
+								sending = false;
+							}
+			});
+		}
+    }, false);
+}, false);
+</script>
+
+</body>
+
+</html>
