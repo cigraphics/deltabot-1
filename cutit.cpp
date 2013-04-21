@@ -27,7 +27,7 @@ int servo_deg[8];
 using namespace std;
 
 void servo_write(int servo_pin, int deg) { // 0 - 180 deg
-  int new_deg = deg == 0 ? 0 : servo_min_deg[servo_pin] - deg;
+	int new_deg = deg == 0 ? 0 : servo_min_deg[servo_pin] - deg;
 	printf("Attempt: Servo %d > deg: %d \n", servo_pin, new_deg);
 	if (new_deg >= servo_max_deg[servo_pin] && new_deg <= servo_min_deg[servo_pin]) {
 		char exec[255] = {0};
