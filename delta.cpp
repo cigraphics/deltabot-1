@@ -84,24 +84,24 @@ int main(int argc, char *argv[]) {
 	a2[17] = 2;
 
 		
-	a3[0] = 0;
-	a3[1] = 0;
-	a3[2] = 0;
-	a3[3] = 0;
-	a3[4] = 1;
-	a3[5] = 1;
-	a3[6] = 1;
-	a3[7] = 1;
-	a3[8] = 2;
-	a3[9] = 2;
-	a3[10] = 2;
-	a3[11] = 2;
-	a3[12] = 3;
-	a3[13] = 3;
-	a3[14] = 3;
-	a3[15] = 3;
-	a3[16] = 4;
-	a3[17] = 4;
+	a3[0] = 28;
+	a3[1] = 28;
+	a3[2] = 28;
+	a3[3] = 28;
+	a3[4] = 27;
+	a3[5] = 27;
+	a3[6] = 27;
+	a3[7] = 27;
+	a3[8] = 26;
+	a3[9] = 26;
+	a3[10] = 26;
+	a3[11] = 26;
+	a3[12] = 25;
+	a3[13] = 25;
+	a3[14] = 25;
+	a3[15] = 25;
+	a3[16] = 24;
+	a3[17] = 24;
 	
 	// test 
 
@@ -117,24 +117,35 @@ int main(int argc, char *argv[]) {
 	servo_min_deg[2] = SERVO_2_MIN_DEG;
 	servo_min_deg[7] = SERVO_3_MIN_DEG;
 	
-	
-	//servo_write(SERVO_1_PIN, 28);
-	//servo_write(SERVO_2_PIN, 15);
-	//servo_write(SERVO_3_PIN, 21);
-	delay(500);
-	
-	printf("%d", a1[3]);
-	return 0;
+	/*
+	servo_write(SERVO_1_PIN, 28);
+	servo_write(SERVO_2_PIN, 15);
+	servo_write(SERVO_3_PIN, 21);
+	delay(500);*/
+	/*
 	for (int i = 0; i <= 17; i++) {
 		delay(500);
-		printf("pas: %d > S1= %d > S2= %d > S3=%d \n", i, a1[i], a2[i], a3[i]);
-		//servo_write(SERVO_1_PIN, atoi(a1[i]));
-		//servo_write(SERVO_2_PIN, atoi(a2[i]));
-		//servo_write(SERVO_3_PIN, atoi(a3[i]));
-	}
+		if (i != 3) {
+			a2[i]+= 15;
+			printf("pas: %d > S1= %d > S2= %d > S3=%d \n", i, a3[i]-10, a2[i]-10, a1[i]-10);
+			servo_write(SERVO_1_PIN, a3[i]-4);
+			servo_write(SERVO_2_PIN, a2[i]-4);
+			servo_write(SERVO_3_PIN, a1[i]-4);
+		}
+	}*/
 	/*
+	delay(500);
+	servo_write(SERVO_1_PIN, 10);
+	servo_write(SERVO_2_PIN, 10);
+	servo_write(SERVO_3_PIN, 10);
+	
+	delay(500);
+	servo_write(SERVO_1_PIN, 24);
+	servo_write(SERVO_2_PIN, 17);
+	servo_write(SERVO_3_PIN, 38);*/
+	
 	servo_write(SERVO_1_PIN, atoi(argv[1]));
 	servo_write(SERVO_2_PIN, atoi(argv[2]));
 	servo_write(SERVO_3_PIN, atoi(argv[3]));
-	*/
+	
 }
