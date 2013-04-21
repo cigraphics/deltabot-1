@@ -7,11 +7,15 @@
 <body>
 
 <form id="canvas" action="" method="get">
-  <input type="text" name="x" id="x" value="" />
+	<input type="text" name="x" id="x" value="" />
 	<input type="text" name="y" id="y" value="" />
 	<input type="text" name="z" id="z" value="" />
 	<input type="submit" value="Send" />
 </form>
+
+<input type="hidden" id="xyz" value="" />
+
+<button id="reset">RESET</button>
 
 <script>
 
@@ -81,18 +85,32 @@ Ajax = function(opts) {
 window.addEventListener("load", function() {
     document.getElementById("canvas").addEventListener("submit", function(e) {
 		e.preventDefault();
-		var x,y,z;
+		var x,y,z, xyz, qxyz, setval;
 		x = document.getElementById("x").value;
 		y = document.getElementById("y").value;
 		z = document.getElementById("z").value;
+		xyz = document.getElementById("xyz").value;
+		qxyz = "&x2=0&y2=0&z2=0"
+		if ( xyz ) {
+			xyz = xyz.split("|");
+			qxyz = "&x2=" + xyz[0] + "&y2=" + xyz[1] + "&z2=" + xyz[2]
+			setval = xyz[0] + "|" + xyz[1] + "|" + xyz[2]
+		}
+		
 		Ajax({
 			type	:	"GET",
-			url		:	"/?x=" + x + "&y=" + y + "&z=" + z,
+			url		:	"/?x=" + x + "&y=" + y + "&z=" + z + qxyz,
 			success	:	function() {
-							document.getElementById("x").focus();
+							document.getElementById("xyz").value = setval;
 						}
 		});
     }, false);
+	document.getElementById("reset").onclick = function() {
+		Ajax({
+			type	:	"GET",
+			url		:	"/reset"
+		});
+	}
 }, false);
 </script>
 
